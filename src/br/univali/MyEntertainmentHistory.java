@@ -1,18 +1,10 @@
 package br.univali;
 
-import br.univali.bd.GerenciadorConexao;
-import br.univali.ui.TelaPrincipal;
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
+import br.univali.bd.ComunicacaoBD;
 import javax.swing.UIManager;
 
 public class MyEntertainmentHistory {
-    
-    private static Connection conexao = null;
-    private static PreparedStatement st = null;
-    private static ResultSet rs = null;
-    
+        
     public static void main(String[] args) {
         
         try {
@@ -23,36 +15,16 @@ public class MyEntertainmentHistory {
         }
         
         
-            //        TelaPrincipal tela = new TelaPrincipal();
+//        TelaPrincipal tela = new TelaPrincipal();
 //        tela.setLocationRelativeTo(null);
 //        tela.setVisible(true);
         try {
-            inserirUsuario();
-            verUsuarios();
+            ComunicacaoBD.verUsuarios();
+            
+            //inserirEntretenimento("La Casa de Papel", 1, 4*45, 2);
+            ComunicacaoBD.verEntretenimentos();
         } catch (Exception ex) {
-            System.out.println("Erro ao executar o comando SQL " + ex.getMessage());
+            System.out.println("Erro ao executar o comando SQL \n" + ex.getMessage());
         }
-       
-        
-    }
-    
-    public static void verUsuarios() throws Exception{
-        conexao = GerenciadorConexao.getConexao();
-        String SQL = "SELECT * FROM USUARIOS";
-        st = conexao.prepareStatement(SQL);
-        rs = st.executeQuery(SQL);
-        while(rs.next()){
-            int id = rs.getInt("id_usuario");
-            String nome = rs.getString("nome");
-            System.out.println(id + " -> " + nome);
-        }
-    }
-    
-    public static void inserirUsuario() throws Exception{
-        conexao = GerenciadorConexao.getConexao();
-        String SQL = "INSERT INTO USUARIOS (nome) VALUES('finish')";
-        st = conexao.prepareStatement(SQL);
-        st.execute(SQL);
-    }
-    
+    }    
 }

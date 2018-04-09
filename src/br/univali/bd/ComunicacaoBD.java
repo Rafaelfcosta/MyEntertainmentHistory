@@ -3,6 +3,8 @@ package br.univali.bd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,10 +16,11 @@ public class ComunicacaoBD {
     private static PreparedStatement pst = null;
     private static ResultSet rs = null;
     
-    private static final int SERIE = 1;
-    private static final int FILME = 2;
-    private static final int ANIME = 3;
-    private static final int GAME  = 4;
+    private static final int SERIE  = 1;
+    private static final int FILME  = 2;
+    private static final int ANIME  = 3;
+    private static final int GAME   = 4;
+    private static final int MUSICA = 5;
     
     public static void inserirTestUsers() throws Exception{
         for(int i=0; i<10; i++){
@@ -26,8 +29,8 @@ public class ComunicacaoBD {
         }
     }
     
-    public static void deletar() throws Exception{
-        comandoSQL("DELETE FROM USUARIOS");
+    public static void deletar(int id) throws Exception{
+        comandoSQL("DELETE FROM ENTRETENIMENTOS WHERE id_entretenimento = " + id);
     }
     
     public static void verUsuarios() throws Exception{
@@ -54,6 +57,32 @@ public class ComunicacaoBD {
             System.out.println(id + " -> " + titulo + " | " + getCategoria(categoria) + " | " + (int)duracao/60 + " horas consumidas");
         }
     }
+    public static DefaultTableModel getEntretenimentos() throws Exception{
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Título");
+        modelo.addColumn("Categoria");
+        modelo.addColumn("Duração da Sessão");
+        
+        
+        conexao = GerenciadorConexao.getConexao();
+        String SQL = "SELECT * FROM ENTRETENIMENTOS";
+        pst = conexao.prepareStatement(SQL);
+        rs = pst.executeQuery(SQL);
+        while(rs.next()){
+            Vector linha = new Vector();
+            
+            int id = rs.getInt("id_entretenimento");
+            String titulo = rs.getString("titulo");
+            double duracao = rs.getDouble("duracao_sessao");
+            int categoria = rs.getInt("categoria");
+            
+            linha.add(titulo);
+            linha.add(getCategoria(categoria));
+            linha.add((int)duracao/60);
+            modelo.addRow(linha);
+        }
+        return modelo;
+    }
     
     public static void verEntretenimentos(int id_usuario) throws Exception{
         conexao = GerenciadorConexao.getConexao();
@@ -79,6 +108,8 @@ public class ComunicacaoBD {
                 return "Anime";
             case GAME:
                 return "Game";
+            case MUSICA:
+                return "Música";
             default:
                 return "";
         }

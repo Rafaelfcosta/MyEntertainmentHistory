@@ -1,19 +1,24 @@
 package br.univali.ui;
 
+
 import br.univali.bd.ComunicacaoBD;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-public class TelaPrincipal extends javax.swing.JFrame {
+/**
+ *
+ * @author Felipe
+ */
+public class TelaExibirEntretenimentos extends javax.swing.JFrame {
 
     /**
-     * Creates new form TelaPrincipal
+     * Creates new form telaMultimidia
      */
-    public TelaPrincipal() throws Exception {
-        initComponents();
-        
-        tabela.setModel(ComunicacaoBD.getEntretenimentos());
+    public TelaExibirEntretenimentos() throws Exception {
+        initComponents();  
+        this.setLocationRelativeTo(null);
+        tabela.getTableHeader().setReorderingAllowed(false);
+        tabela.setDefaultEditor(Object.class, null);
+        popularTabela();
     }
 
     /**
@@ -25,19 +30,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        btnDeletar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("Inserir Entretenimento");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, java.awt.BorderLayout.NORTH);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -54,15 +52,33 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        btnDeletar.setText("Deletar");
+        btnDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDeletar, java.awt.BorderLayout.NORTH);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.EAST);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        TelaNovaMidia telamidia = new TelaNovaMidia();
-        telamidia.setLocationRelativeTo(this);
-        telamidia.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
+        try {
+            ComunicacaoBD.deletar(tabela.getSelectedRow());
+            popularTabela();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_btnDeletarActionPerformed
 
+    private void popularTabela() throws Exception{
+        tabela.setModel(ComunicacaoBD.getEntretenimentos());
+    }
     /**
      * @param args the command line arguments
      */
@@ -80,31 +96,35 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaExibirEntretenimentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaExibirEntretenimentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaExibirEntretenimentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaExibirEntretenimentos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new TelaPrincipal().setVisible(true);
+                    new TelaExibirEntretenimentos().setVisible(true);
                 } catch (Exception ex) {
-                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TelaExibirEntretenimentos.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnDeletar;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
+
+    
 }

@@ -1,9 +1,11 @@
 package br.univali.ui;
 
 
+import br.univali.bd.ComunicacaoBD;
 import br.univali.ui.TelaExibirEntretenimentos;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
 
 /*
@@ -21,8 +23,9 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * Creates new form testes
      */
-    public TelaInicial() {
+    public TelaInicial() throws Exception {
         initComponents();
+        listaUsuarios = ComunicacaoBD.getUsuarios(listaUsuarios);
     }
 
     /**
@@ -33,74 +36,72 @@ public class TelaInicial extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
-        jButtonSim = new javax.swing.JButton();
-        jButtonNao = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        jPanel1 = new javax.swing.JPanel();
+        btnCadastrar = new javax.swing.JButton();
+        btnVerCadastrados = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        listaUsuarios = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        setPreferredSize(new java.awt.Dimension(300, 200));
 
-        jButtonSim.setText("Clique aqui para cadastrar");
-        jButtonSim.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastrar.setText("Clique aqui para cadastrar");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSimActionPerformed(evt);
+                btnCadastrarActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
-        getContentPane().add(jButtonSim, gridBagConstraints);
+        jPanel1.add(btnCadastrar);
 
-        jButtonNao.setText("Sair");
-        jButtonNao.addActionListener(new java.awt.event.ActionListener() {
+        btnVerCadastrados.setText("Visualizar Cadastrados");
+        btnVerCadastrados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNaoActionPerformed(evt);
+                btnVerCadastradosActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        getContentPane().add(jButtonNao, gridBagConstraints);
+        jPanel1.add(btnVerCadastrados);
 
-        jToggleButton1.setText("Clique aqui para ir para sua multimidia");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        jPanel3.add(listaUsuarios);
+
+        jPanel1.add(jPanel3);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                btnSairActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        getContentPane().add(jToggleButton1, gridBagConstraints);
+        jPanel2.add(btnSair);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSimActionPerformed
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        TelaInserirEntretenimento tela;
+        tela = new TelaInserirEntretenimento();
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
-    }//GEN-LAST:event_jButtonSimActionPerformed
-
-    private void jButtonNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNaoActionPerformed
-       
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_jButtonNaoActionPerformed
+    }//GEN-LAST:event_btnSairActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        TelaExibirEntretenimentos telamult;
+    private void btnVerCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCadastradosActionPerformed
         try {
-            telamult = new TelaExibirEntretenimentos();
-            telamult.setVisible(true);
+            TelaExibirEntretenimentos tela = new TelaExibirEntretenimentos();
+            tela.setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
         
-                
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_btnVerCadastradosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,14 +134,22 @@ public class TelaInicial extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaInicial().setVisible(true);
+                try {
+                    new TelaInicial().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonNao;
-    private javax.swing.JButton jButtonSim;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnVerCadastrados;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JComboBox<String> listaUsuarios;
     // End of variables declaration//GEN-END:variables
 }

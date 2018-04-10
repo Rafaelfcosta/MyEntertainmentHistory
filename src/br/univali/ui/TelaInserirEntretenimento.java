@@ -49,7 +49,7 @@ public class TelaInserirEntretenimento extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Série", "Filme", "Anime", "Game", "Música", " " }));
+        categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Série", "Filme", "Anime", "Game", "Música" }));
         categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 categoriaActionPerformed(evt);

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -44,6 +45,19 @@ public class ComunicacaoBD {
             System.out.println(id + " -> " + nome);
         }
     }
+    public static JComboBox getUsuarios(JComboBox combo) throws Exception{
+        combo.removeAllItems();        
+        conexao = GerenciadorConexao.getConexao();
+        String SQL = "SELECT * FROM USUARIOS";
+        pst = conexao.prepareStatement(SQL);
+        rs = pst.executeQuery(SQL);
+        while(rs.next()){
+            int id = rs.getInt("id_usuario");
+            String nome = rs.getString("nome");
+            combo.addItem(nome);
+        }
+        return combo;
+    }
     public static void verEntretenimentos() throws Exception{
         conexao = GerenciadorConexao.getConexao();
         String SQL = "SELECT * FROM ENTRETENIMENTOS";
@@ -62,7 +76,6 @@ public class ComunicacaoBD {
         modelo.addColumn("Título");
         modelo.addColumn("Categoria");
         modelo.addColumn("Duração da Sessão");
-        
         
         conexao = GerenciadorConexao.getConexao();
         String SQL = "SELECT * FROM ENTRETENIMENTOS";

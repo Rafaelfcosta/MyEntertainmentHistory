@@ -16,12 +16,12 @@ import javax.swing.JFrame;
  *
  * @author Felipe
  */
-public class testes extends javax.swing.JFrame {
+public class TelaInicial extends javax.swing.JFrame {
 
     /**
      * Creates new form testes
      */
-    public testes() {
+    public TelaInicial() {
         initComponents();
     }
 
@@ -82,9 +82,7 @@ public class testes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSimActionPerformed
-        
-       
-// TODO add your handling code here:
+
     }//GEN-LAST:event_jButtonSimActionPerformed
 
     private void jButtonNaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNaoActionPerformed
@@ -98,7 +96,7 @@ public class testes extends javax.swing.JFrame {
             telamult = new TelaExibirEntretenimentos();
             telamult.setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(testes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
         }
         
                 
@@ -121,20 +119,21 @@ public class testes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(testes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(testes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(testes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(testes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new testes().setVisible(true);
+                new TelaInicial().setVisible(true);
             }
         });
     }

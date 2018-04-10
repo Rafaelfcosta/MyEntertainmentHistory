@@ -16,9 +16,9 @@ public class MyEntertainmentHistory {
         
         
         //TelaNovaMidia tela;
-        TelaInserirEntretenimento tela;
+        TelaInicial tela;
         try {
-            tela = new TelaInserirEntretenimento();
+            tela = new TelaInicial();
             tela.setLocationRelativeTo(null);
             tela.setVisible(true);
         } catch (Exception ex) {

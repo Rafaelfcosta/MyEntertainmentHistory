@@ -78,7 +78,7 @@ public class ComunicacaoBD {
             
             linha.add(titulo);
             linha.add(getCategoria(categoria));
-            linha.add((int)duracao/60);
+            linha.add((int)duracao/60 + " horas");
             modelo.addRow(linha);
         }
         return modelo;

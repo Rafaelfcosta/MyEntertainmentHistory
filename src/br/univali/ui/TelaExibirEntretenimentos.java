@@ -34,6 +34,9 @@ public class TelaExibirEntretenimentos extends javax.swing.JFrame {
         tabela = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         btnDeletar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        txtBusca = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -60,7 +63,16 @@ public class TelaExibirEntretenimentos extends javax.swing.JFrame {
                 btnDeletarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDeletar, java.awt.BorderLayout.NORTH);
+        jPanel1.add(btnDeletar, java.awt.BorderLayout.PAGE_END);
+
+        txtBusca.setToolTipText("Título para pesquisar");
+        txtBusca.setPreferredSize(new java.awt.Dimension(100, 20));
+        jPanel2.add(txtBusca);
+
+        btnBuscar.setText("Buscar");
+        jPanel2.add(btnBuscar);
+
+        jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.EAST);
 
@@ -120,10 +132,13 @@ public class TelaExibirEntretenimentos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnDeletar;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabela;
+    private javax.swing.JTextField txtBusca;
     // End of variables declaration//GEN-END:variables
 
     

@@ -1,19 +1,8 @@
 package br.univali.ui;
 
 
+import br.univali.alert.Aviso;
 import br.univali.bd.ComunicacaoBD;
-import br.univali.ui.TelaExibirEntretenimentos;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
-import javax.swing.JFrame;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Felipe
@@ -94,12 +83,6 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnVerCadastradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCadastradosActionPerformed
-        try {
-            TelaExibirEntretenimentos tela = new TelaExibirEntretenimentos();
-            tela.setVisible(true);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
         
     }//GEN-LAST:event_btnVerCadastradosActionPerformed
 
@@ -137,7 +120,8 @@ public class TelaInicial extends javax.swing.JFrame {
                 try {
                     new TelaInicial().setVisible(true);
                 } catch (Exception ex) {
-                    Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex.getMessage());
+                    Aviso aviso = new Aviso("Ocorreu um erro na tela inicial");
                 }
             }
         });

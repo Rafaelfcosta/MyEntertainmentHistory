@@ -1,5 +1,6 @@
 package br.univali.bd;
 
+import br.univali.alert.Aviso;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,7 +15,8 @@ public class GerenciadorConexao {
         try {
             conexao = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException ex) {
-            System.out.println("Erro ao criar conexão com o banco de dados");
+            Aviso aviso = new Aviso("Erro ao criar conexão com o banco de dados");
+//            System.out.println("Erro ao criar conexão com o banco de dados");
         }
         return conexao;
     }    

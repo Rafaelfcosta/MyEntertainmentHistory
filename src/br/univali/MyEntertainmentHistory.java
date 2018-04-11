@@ -1,5 +1,6 @@
 package br.univali;
 
+import br.univali.alert.Aviso;
 import br.univali.ui.*;
 import javax.swing.UIManager;
 
@@ -16,13 +17,16 @@ public class MyEntertainmentHistory {
         
         
         //TelaNovaMidia tela;
-        TelaInicial tela;
+//        TelaInicial tela;
+        TelaPrincipal tela;
         try {
-            tela = new TelaInicial();
+//            tela = new TelaInicial();
+            tela = new TelaPrincipal();
             tela.setLocationRelativeTo(null);
             tela.setVisible(true);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            Aviso aviso = new Aviso("Um erro ocorreu");
         }
         
         try {
@@ -33,6 +37,7 @@ public class MyEntertainmentHistory {
             //ComunicacaoBD.inserirEntretenimento("Homem de ferro", 2, 80, 1);
             //ComunicacaoBD.verEntretenimentos(1);
         } catch (Exception ex) {
+            Aviso aviso = new Aviso("Erro ao executar o comando SQL \n");
             System.out.println("Erro ao executar o comando SQL \n" + ex.getMessage());
         }
     }    

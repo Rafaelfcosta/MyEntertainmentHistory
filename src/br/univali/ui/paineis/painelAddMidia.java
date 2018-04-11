@@ -1,29 +1,23 @@
-package br.univali.ui;
-
-
-import br.univali.bd.ComunicacaoBD;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package br.univali.ui.paineis;
+
+import br.univali.bd.ComunicacaoBD;
 
 /**
  *
- * @author Felipe
+ * @author Rafael F
  */
-public class TelaInserirEntretenimento extends javax.swing.JFrame {
+public class painelAddMidia extends javax.swing.JPanel {
 
     /**
-     * Creates new form teste2
+     * Creates new form painelAddMidia
      */
-    public TelaInserirEntretenimento() {
+    public painelAddMidia() {
         initComponents();
-        
-        
     }
 
     /**
@@ -46,8 +40,6 @@ public class TelaInserirEntretenimento extends javax.swing.JFrame {
         salvar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Série", "Filme", "Anime", "Game", "Música" }));
         categoria.addActionListener(new java.awt.event.ActionListener() {
@@ -84,8 +76,8 @@ public class TelaInserirEntretenimento extends javax.swing.JFrame {
         jButton3.setText("voltar");
         jPanel1.add(jButton3);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -108,7 +100,7 @@ public class TelaInserirEntretenimento extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(141, 141, 141)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,64 +120,27 @@ public class TelaInserirEntretenimento extends javax.swing.JFrame {
                     .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTituloActionPerformed
 
     private void categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaActionPerformed
 
     }//GEN-LAST:event_categoriaActionPerformed
 
+    private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTituloActionPerformed
+
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
-        
+
         try {
             ComunicacaoBD.inserirEntretenimento(txtTitulo.getText(), categoria.getSelectedIndex()+1, Double.parseDouble(txtDuracao.getText()), 1);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-        }               
+        }
     }//GEN-LAST:event_salvarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaInserirEntretenimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaInserirEntretenimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaInserirEntretenimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaInserirEntretenimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaInserirEntretenimento().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> categoria;

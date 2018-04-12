@@ -2,6 +2,7 @@ package br.univali.ui;
 
 import br.univali.ui.paineis.painelVerMidias;
 import br.univali.alert.Aviso;
+import br.univali.bd.ComunicacaoBD;
 import br.univali.ui.paineis.painelAddMidia;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,23 +19,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     
     private JPanel midias = new painelVerMidias();
     private JPanel addMidia = new painelAddMidia();
-
     
     public TelaPrincipal() throws Exception {
+        //this.setUndecorated(true);
         initComponents();
-        ConfigurarPaineis();        
-    }
-    
-    private void ConfigurarAcaoInicio(){
-        Action acao = new AbstractAction(painelInicio.getName()){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                
-            }
-        };
-        
-        //getAction
-    }    
+        ConfigurarPaineis();
+        this.labelNomeUsuario.setText(ComunicacaoBD.getUsuario(1));
+    }  
     
     public void ConfigurarPaineis(){
         MouseListener listener = new MouseAdapter() {

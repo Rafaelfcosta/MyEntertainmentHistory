@@ -58,6 +58,15 @@ public class ComunicacaoBD {
         }
         return combo;
     }
+    public static String getUsuario(int id) throws Exception{
+        conexao = GerenciadorConexao.getConexao();
+        String SQL = "SELECT * FROM USUARIOS WHERE id_usuario = " + id;
+        pst = conexao.prepareStatement(SQL);
+        rs = pst.executeQuery(SQL);
+        return rs.getString("nome").toUpperCase();
+    }
+    
+    
     public static void verEntretenimentos() throws Exception{
         conexao = GerenciadorConexao.getConexao();
         String SQL = "SELECT * FROM ENTRETENIMENTOS";

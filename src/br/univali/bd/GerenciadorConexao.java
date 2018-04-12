@@ -15,6 +15,7 @@ public class GerenciadorConexao {
         try {
             conexao = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException ex) {
+            ex.printStackTrace();
             Aviso aviso = new Aviso("Erro ao criar conexão com o banco de dados");
 //            System.out.println("Erro ao criar conexão com o banco de dados");
         }

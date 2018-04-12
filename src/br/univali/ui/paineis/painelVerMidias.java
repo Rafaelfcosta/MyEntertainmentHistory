@@ -53,6 +53,7 @@ public class painelVerMidias extends javax.swing.JPanel {
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         btnDeletar.setText("Deletar");

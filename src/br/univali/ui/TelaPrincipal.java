@@ -1,7 +1,7 @@
 package br.univali.ui;
 
+import br.univali.MyEntertainmentHistory;
 import br.univali.ui.paineis.painelVerMidias;
-import br.univali.alert.Aviso;
 import br.univali.bd.ComunicacaoBD;
 import br.univali.ui.paineis.painelAddMidia;
 import java.awt.Color;
@@ -9,17 +9,22 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 public class TelaPrincipal extends javax.swing.JFrame {
+    private static int id_usuario;
+    private JPanel midias;
+    private JPanel addMidia;
     
-    private JPanel midias = new painelVerMidias();
-    private JPanel addMidia = new painelAddMidia();
     
-    public TelaPrincipal() throws Exception {
+    public TelaPrincipal(int id_usuario) throws Exception {
         initComponents();
+        this.id_usuario = id_usuario;
         ConfigurarPaineis();
-        this.labelNomeUsuario.setText(ComunicacaoBD.getUsuario(1));
+        this.labelNomeUsuario.setText(ComunicacaoBD.getUsuario(id_usuario));
+        midias = new painelVerMidias(id_usuario);
         painelConteudo.add(midias);
         atualizarPainel();
     }  
@@ -30,9 +35,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent me) {
                 JPanel painel = (JPanel) me.getSource();
-                String nomeAcao = painel.getName();
-                
-                //Action acao = getActionMap().get(nomeAcao);
+                //String nomeAcao = painel.getName();
             }
             
             @Override
@@ -61,6 +64,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         painelFechar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
+    public int getId_usuario() {
+        return id_usuario;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -199,12 +205,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void painelInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelInicioMouseClicked
+        try {
+            this.midias = new painelVerMidias(id_usuario);
+        } catch (Exception ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         painelConteudo.removeAll();
         painelConteudo.add(midias);
         atualizarPainel();
     }//GEN-LAST:event_painelInicioMouseClicked
 
     private void painelAddMidiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelAddMidiaMouseClicked
+        try {
+            this.addMidia = new painelAddMidia();
+        } catch (Exception ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         painelConteudo.removeAll();
         painelConteudo.add(addMidia);
         atualizarPainel();
@@ -249,13 +265,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new TelaPrincipal().setVisible(true);
+                    new TelaPrincipal(id_usuario).setVisible(true);
                 } catch (Exception ex) {
-                    Aviso aviso = new Aviso("Ocorreu um Erro");
+                    MyEntertainmentHistory.mostrarAviso("Ocorreu um Erro");
+                    System.out.println(ex.getMessage());
                 }
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator jSeparator1;

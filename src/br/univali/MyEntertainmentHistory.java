@@ -1,8 +1,8 @@
 package br.univali;
 
-import br.univali.alert.Aviso;
 import br.univali.ui.*;
 import com.alee.laf.WebLookAndFeel;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 public class MyEntertainmentHistory {
@@ -19,17 +19,18 @@ public class MyEntertainmentHistory {
         
         
         //TelaNovaMidia tela;
-//        TelaInicial tela;
-        TelaPrincipal tela;
+        TelaLogin tela;
+//        TelaPrincipal tela;
         try {
-//            tela = new TelaInicial();
-            tela = new TelaPrincipal();
+            tela = new TelaLogin();
+//            tela = new TelaPrincipal();
             tela.setLocationRelativeTo(null);
             tela.setVisible(true);
             
         } catch (Exception ex) {
+            mostrarAviso("Um erro ocorreu");
             ex.printStackTrace();
-            Aviso aviso = new Aviso("Um erro ocorreu");
+            System.out.println(ex.getMessage());
         }
         
         try {
@@ -40,8 +41,13 @@ public class MyEntertainmentHistory {
             //ComunicacaoBD.inserirEntretenimento("Homem de ferro", 2, 80, 1);
             //ComunicacaoBD.verEntretenimentos(1);
         } catch (Exception ex) {
-            Aviso aviso = new Aviso("Erro ao executar o comando SQL \n");
+            mostrarAviso("Erro ao executar o comando SQL \n");
             System.out.println("Erro ao executar o comando SQL \n" + ex.getMessage());
+            
         }
-    }    
+    }
+
+    public static void mostrarAviso(String msg){
+        JOptionPane.showMessageDialog(null, msg);
+    }
 }

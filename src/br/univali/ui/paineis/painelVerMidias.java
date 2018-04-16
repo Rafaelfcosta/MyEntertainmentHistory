@@ -1,29 +1,37 @@
 package br.univali.ui.paineis;
 
 import br.univali.bd.ComunicacaoBD;
+import br.univali.dados.Entretenimento;
+import br.univali.ui.TelaPrincipal;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Rafael F
  */
 public class painelVerMidias extends javax.swing.JPanel {
-
+    
+    private ArrayList<Entretenimento> entretenimentos;
+    private int id_usuario;
     /**
      * Creates new form painelVerMidias
      */
-    public painelVerMidias() throws Exception{
+    public painelVerMidias(int id_usuario) throws Exception{
         initComponents();
         configurarTabela();
-        
+        this.id_usuario = id_usuario;
+        entretenimentos = ComunicacaoBD.getEntretenimentos(id_usuario);
         popularTabela();
         criarDicaPesquisa();
+        
     }
     private void configurarTabela(){
         tabela.getTableHeader().setReorderingAllowed(false);
@@ -42,7 +50,7 @@ public class painelVerMidias extends javax.swing.JPanel {
             public void focusGained(FocusEvent e) {
                 if(txtBusca.getText().equals("Pesquisar...")){
                     txtBusca.setText("");
-                    txtBusca.setForeground(Color.BLACK);
+                    txtBusca.setForeground(Color.WHITE);
                 }
             }
 
@@ -57,8 +65,70 @@ public class painelVerMidias extends javax.swing.JPanel {
         });
     }
     
-    private void popularTabela() throws Exception{
-        tabela.setModel(ComunicacaoBD.getEntretenimentos());
+    public void popularTabela() throws Exception{
+        tabela.setModel(criarModelo());
+    }
+    
+    public void popularTabela(DefaultTableModel modelo) throws Exception{
+        tabela.setModel(modelo);
+    }
+    
+    private DefaultTableModel criarModelo(){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Título");
+        modelo.addColumn("Categoria");
+        modelo.addColumn("Duração da Sessão");
+        
+        for (Entretenimento entretenimento : entretenimentos) {
+            Vector linha = new Vector();          
+            linha.add(entretenimento.getTitulo());
+            linha.add(ComunicacaoBD.getCategoria(entretenimento.getCategoria()));
+            
+            if((int)entretenimento.getDuracao()/60 > 0){
+                String s = "";
+                if((int)entretenimento.getDuracao()/60 > 1){
+                    s = "s";
+                }
+                linha.add((int)entretenimento.getDuracao()/60 + " hora"+s);
+            }else{
+                String s = "";
+                if((int)entretenimento.getDuracao() > 1){
+                    s = "s";
+                }
+                linha.add((int)entretenimento.getDuracao() + " minuto"+s);
+            }
+            modelo.addRow(linha);
+        }
+        return modelo;
+    }
+    
+    private DefaultTableModel criarModelo(ArrayList<Entretenimento> e){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Título");
+        modelo.addColumn("Categoria");
+        modelo.addColumn("Duração da Sessão");
+        
+        for (Entretenimento entretenimento : e) {
+            Vector linha = new Vector();          
+            linha.add(entretenimento.getTitulo());
+            linha.add(ComunicacaoBD.getCategoria(entretenimento.getCategoria()));
+            
+            if((int)entretenimento.getDuracao()/60 > 0){
+                String s = "";
+                if((int)entretenimento.getDuracao()/60 > 1){
+                    s = "s";
+                }
+                linha.add((int)entretenimento.getDuracao()/60 + " hora"+s);
+            }else{
+                String s = "";
+                if((int)entretenimento.getDuracao() > 1){
+                    s = "s";
+                }
+                linha.add((int)entretenimento.getDuracao() + " minuto"+s);
+            }
+            modelo.addRow(linha);
+        }
+        return modelo;
     }
     
     /**
@@ -70,13 +140,17 @@ public class painelVerMidias extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        painelLateral = new javax.swing.JPanel();
         btnDeletar = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        painelBusca = new javax.swing.JPanel();
         txtBusca = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        painelFiltros = new javax.swing.JPanel();
+        checkFiltro = new javax.swing.JCheckBox();
+        listaCategorias = new javax.swing.JComboBox<>();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -99,8 +173,8 @@ public class painelVerMidias extends javax.swing.JPanel {
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        painelLateral.setBackground(new java.awt.Color(51, 51, 51));
+        painelLateral.setLayout(new java.awt.BorderLayout());
 
         btnDeletar.setText("Deletar");
         btnDeletar.addActionListener(new java.awt.event.ActionListener() {
@@ -108,14 +182,13 @@ public class painelVerMidias extends javax.swing.JPanel {
                 btnDeletarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDeletar, java.awt.BorderLayout.PAGE_END);
+        painelLateral.add(btnDeletar, java.awt.BorderLayout.PAGE_END);
 
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        painelBusca.setBackground(new java.awt.Color(51, 51, 51));
 
-        txtBusca.setEditable(false);
         txtBusca.setBackground(new java.awt.Color(60, 60, 60));
         txtBusca.setFont(new java.awt.Font("Lucida Console", 0, 11)); // NOI18N
+        txtBusca.setForeground(new java.awt.Color(255, 255, 255));
         txtBusca.setToolTipText("Título para pesquisar");
         txtBusca.setPreferredSize(new java.awt.Dimension(150, 25));
         txtBusca.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -123,20 +196,42 @@ public class painelVerMidias extends javax.swing.JPanel {
                 txtBuscaKeyTyped(evt);
             }
         });
-        jPanel2.add(txtBusca, java.awt.BorderLayout.CENTER);
+        painelBusca.add(txtBusca);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/univali/ressources/busca.png"))); // NOI18N
-        jPanel2.add(jLabel1, java.awt.BorderLayout.LINE_END);
+        painelBusca.add(jLabel1);
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
+        painelLateral.add(painelBusca, java.awt.BorderLayout.NORTH);
 
-        add(jPanel1, java.awt.BorderLayout.EAST);
+        painelFiltros.setBackground(new java.awt.Color(51, 51, 51));
+
+        checkFiltro.setBackground(new java.awt.Color(51, 51, 51));
+        checkFiltro.setFont(new java.awt.Font("Lucida Console", 0, 11)); // NOI18N
+        checkFiltro.setForeground(new java.awt.Color(255, 255, 255));
+        checkFiltro.setText("Visualizar:");
+        checkFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkFiltroActionPerformed(evt);
+            }
+        });
+        painelFiltros.add(checkFiltro);
+
+        listaCategorias.setBackground(new java.awt.Color(51, 51, 51));
+        listaCategorias.setFont(new java.awt.Font("Lucida Console", 0, 11)); // NOI18N
+        listaCategorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Séries", "Filmes", "Animes", "Games", "Músicas" }));
+        painelFiltros.add(listaCategorias);
+
+        painelLateral.add(painelFiltros, java.awt.BorderLayout.CENTER);
+
+        add(painelLateral, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         try {
-//            ComunicacaoBD.deletar(tabela.getSelectedRow());
-            JOptionPane.showConfirmDialog(this, "Realmente deseja deletar a midia selecionada?");
+            int resp = JOptionPane.showConfirmDialog(this, "Realmente deseja deletar '"+ entretenimentos.get(tabela.getSelectedRow()).getTitulo()+"'?");
+            if(resp == 0){
+                ComunicacaoBD.deletar(entretenimentos.get(tabela.getSelectedRow()).getId());
+            }
             popularTabela();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -145,19 +240,41 @@ public class painelVerMidias extends javax.swing.JPanel {
 
     private void txtBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaKeyTyped
         try {
-            tabela.setModel(ComunicacaoBD.getEntretenimentos(this.txtBusca.getText()));
+            this.entretenimentos = ComunicacaoBD.getEntretenimentos(id_usuario, txtBusca.getText());
+            tabela.setModel(criarModelo(entretenimentos));
         } catch (Exception ex) {
             Logger.getLogger(painelVerMidias.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_txtBuscaKeyTyped
-    
+
+    private void checkFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkFiltroActionPerformed
+        if(checkFiltro.isSelected()){
+            try {
+                this.entretenimentos = ComunicacaoBD.getEntretenimentos(id_usuario, listaCategorias.getSelectedIndex()+1);
+                popularTabela();
+            } catch (Exception ex) {
+                Logger.getLogger(painelVerMidias.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            try {
+                this.entretenimentos = ComunicacaoBD.getEntretenimentos(id_usuario);
+                popularTabela();
+            } catch (Exception ex) {
+                Logger.getLogger(painelVerMidias.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_checkFiltroActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox checkFiltro;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> listaCategorias;
+    private javax.swing.JPanel painelBusca;
+    private javax.swing.JPanel painelFiltros;
+    private javax.swing.JPanel painelLateral;
     private javax.swing.JTable tabela;
     private javax.swing.JTextField txtBusca;
     // End of variables declaration//GEN-END:variables

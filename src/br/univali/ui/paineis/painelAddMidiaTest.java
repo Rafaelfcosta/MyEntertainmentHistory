@@ -5,7 +5,6 @@
  */
 package br.univali.ui.paineis;
 
-import br.univali.MyEntertainmentHistory;
 import br.univali.bd.ComunicacaoBD;
 
 /**
@@ -39,7 +38,7 @@ public class painelAddMidia extends javax.swing.JPanel {
         txtDuracao = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         salvar = new javax.swing.JButton();
-        btnLimpar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Série", "Filme", "Anime", "Game", "Música" }));
@@ -71,13 +70,8 @@ public class painelAddMidia extends javax.swing.JPanel {
         });
         jPanel1.add(salvar);
 
-        btnLimpar.setText("Limpar");
-        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnLimpar);
+        jButton2.setText("Limpar");
+        jPanel1.add(jButton2);
 
         jButton3.setText("voltar");
         jPanel1.add(jButton3);
@@ -104,7 +98,7 @@ public class painelAddMidia extends javax.swing.JPanel {
                                     .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(107, 107, 107)
+                        .addGap(141, 141, 141)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -124,9 +118,9 @@ public class painelAddMidia extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDuracao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                .addGap(55, 55, 55)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(85, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -139,26 +133,18 @@ public class painelAddMidia extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTituloActionPerformed
 
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
-        try {
-           ComunicacaoBD.inserirEntretenimento(txtTitulo.getText(), categoria.getSelectedIndex()+1, Double.parseDouble(txtDuracao.getText()), 1);
-           MyEntertainmentHistory.mostrarAviso("Inserido com sucesso!");
-           btnLimpar.doClick();
-        } catch (Exception ex) {
-            MyEntertainmentHistory.mostrarAviso("Ocorreu um erro ao inserir");
-            System.out.println(ex.getMessage());
-        }            
-    }//GEN-LAST:event_salvarActionPerformed
 
-    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        txtTitulo.setText("");
-        txtDuracao.setText("");
-        categoria.setSelectedIndex(0);
-    }//GEN-LAST:event_btnLimparActionPerformed
+        try {
+            ComunicacaoBD.inserirEntretenimento(txtTitulo.getText(), categoria.getSelectedIndex()+1, Double.parseDouble(txtDuracao.getText()), 1);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_salvarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLimpar;
     private javax.swing.JComboBox<String> categoria;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

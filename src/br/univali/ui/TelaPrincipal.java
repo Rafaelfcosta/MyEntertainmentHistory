@@ -217,7 +217,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void painelAddMidiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelAddMidiaMouseClicked
         try {
-            this.addMidia = new painelAddMidia();
+            this.addMidia = new painelAddMidia(id_usuario);
         } catch (Exception ex) {
             Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }

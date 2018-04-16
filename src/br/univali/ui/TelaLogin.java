@@ -17,7 +17,16 @@ public class TelaLogin extends javax.swing.JFrame {
     public TelaLogin() throws Exception {
         initComponents();
         usuarios = ComunicacaoBD.getUsuarios();
-        listaUsuarios = ComunicacaoBD.getUsuarios(listaUsuarios);
+        ComunicacaoBD.getUsuarios(listaUsuarios);
+    }
+    
+    public void atualizarLista(){
+        try{
+            usuarios = ComunicacaoBD.getUsuarios();
+            ComunicacaoBD.getUsuarios(listaUsuarios);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -68,6 +77,11 @@ public class TelaLogin extends javax.swing.JFrame {
         jPanel1.add(jLabel2, java.awt.BorderLayout.WEST);
 
         listaUsuarios.setFont(new java.awt.Font("Lucida Console", 0, 14)); // NOI18N
+        listaUsuarios.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                listaUsuariosFocusGained(evt);
+            }
+        });
         jPanel1.add(listaUsuarios, java.awt.BorderLayout.CENTER);
 
         painelCentral.add(jPanel1, java.awt.BorderLayout.NORTH);
@@ -135,6 +149,10 @@ public class TelaLogin extends javax.swing.JFrame {
         tela.setLocationRelativeTo(this);
         tela.setVisible(true);
     }//GEN-LAST:event_btnRegistarActionPerformed
+
+    private void listaUsuariosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_listaUsuariosFocusGained
+        atualizarLista();
+    }//GEN-LAST:event_listaUsuariosFocusGained
 
     /**
      * @param args the command line arguments

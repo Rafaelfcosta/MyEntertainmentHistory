@@ -232,6 +232,7 @@ public class painelVerMidias extends javax.swing.JPanel {
             if(resp == 0){
                 ComunicacaoBD.deletar(entretenimentos.get(tabela.getSelectedRow()).getId());
             }
+            this.entretenimentos = ComunicacaoBD.getEntretenimentos(id_usuario);
             popularTabela();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

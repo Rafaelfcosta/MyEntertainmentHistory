@@ -5,6 +5,7 @@
  */
 package br.univali.ui;
 
+import br.univali.MyEntertainmentHistory;
 import br.univali.bd.ComunicacaoBD;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,6 +129,8 @@ public class TelaNovoUsuario extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
             ComunicacaoBD.inserirUsuario(txtNome.getText());
+            this.dispose();
+            MyEntertainmentHistory.mostrarAviso("Usuário Inserido com sucesso!");
         } catch (Exception ex) {
             Logger.getLogger(TelaNovoUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -14,11 +14,11 @@ import br.univali.bd.ComunicacaoBD;
  */
 public class painelAddMidia extends javax.swing.JPanel {
 
-    /**
-     * Creates new form painelAddMidia
-     */
-    public painelAddMidia() {
+    int id_usuario;
+    
+    public painelAddMidia(int id_usuario) {
         initComponents();
+        this.id_usuario = id_usuario;
     }
 
     /**
@@ -140,7 +140,7 @@ public class painelAddMidia extends javax.swing.JPanel {
 
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
         try {
-           ComunicacaoBD.inserirEntretenimento(txtTitulo.getText(), categoria.getSelectedIndex()+1, Double.parseDouble(txtDuracao.getText()), 1);
+           ComunicacaoBD.inserirEntretenimento(txtTitulo.getText(), categoria.getSelectedIndex()+1, Double.parseDouble(txtDuracao.getText()), id_usuario);
            MyEntertainmentHistory.mostrarAviso("Inserido com sucesso!");
            btnLimpar.doClick();
         } catch (Exception ex) {

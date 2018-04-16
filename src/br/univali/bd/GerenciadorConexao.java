@@ -13,6 +13,7 @@ public class GerenciadorConexao {
     
     public static Connection getConexao(){
         try {
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             conexao = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException ex) {
             ex.printStackTrace();

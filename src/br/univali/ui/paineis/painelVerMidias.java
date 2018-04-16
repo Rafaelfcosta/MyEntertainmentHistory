@@ -1,6 +1,13 @@
 package br.univali.ui.paineis;
 
 import br.univali.bd.ComunicacaoBD;
+import java.awt.Color;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -11,8 +18,43 @@ public class painelVerMidias extends javax.swing.JPanel {
     /**
      * Creates new form painelVerMidias
      */
-    public painelVerMidias() {
+    public painelVerMidias() throws Exception{
         initComponents();
+        configurarTabela();
+        
+        popularTabela();
+        criarDicaPesquisa();
+    }
+    private void configurarTabela(){
+        tabela.getTableHeader().setReorderingAllowed(false);
+        tabela.setDefaultEditor(Object.class, null);
+        tabela.setOpaque(true);
+        tabela.setFillsViewportHeight(true);
+        tabela.setBackground(Color.GRAY);
+        tabela.setSelectionBackground(Color.darkGray);
+    }
+    
+    private void criarDicaPesquisa(){
+        txtBusca.setText("Pesquisar...");
+        txtBusca.setForeground(Color.GRAY);
+        txtBusca.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(txtBusca.getText().equals("Pesquisar...")){
+                    txtBusca.setText("");
+                    txtBusca.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(txtBusca.getText().isEmpty()){
+                    txtBusca.setText("");
+                    txtBusca.setForeground(Color.GRAY);
+                    txtBusca.setText("Pesquisar...");
+                }
+            }
+        });
     }
     
     private void popularTabela() throws Exception{
@@ -34,10 +76,12 @@ public class painelVerMidias extends javax.swing.JPanel {
         btnDeletar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         txtBusca = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
+        tabela.setFont(new java.awt.Font("Lucida Console", 0, 14)); // NOI18N
+        tabela.setForeground(new java.awt.Color(255, 255, 255));
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -49,11 +93,13 @@ public class painelVerMidias extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabela.setToolTipText("");
+        tabela.setShowVerticalLines(false);
         jScrollPane1.setViewportView(tabela);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         btnDeletar.setText("Deletar");
@@ -64,12 +110,23 @@ public class painelVerMidias extends javax.swing.JPanel {
         });
         jPanel1.add(btnDeletar, java.awt.BorderLayout.PAGE_END);
 
-        txtBusca.setToolTipText("Título para pesquisar");
-        txtBusca.setPreferredSize(new java.awt.Dimension(100, 20));
-        jPanel2.add(txtBusca);
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
-        btnBuscar.setText("Buscar");
-        jPanel2.add(btnBuscar);
+        txtBusca.setEditable(false);
+        txtBusca.setBackground(new java.awt.Color(60, 60, 60));
+        txtBusca.setFont(new java.awt.Font("Lucida Console", 0, 11)); // NOI18N
+        txtBusca.setToolTipText("Título para pesquisar");
+        txtBusca.setPreferredSize(new java.awt.Dimension(150, 25));
+        txtBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscaKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtBusca, java.awt.BorderLayout.CENTER);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/univali/ressources/busca.png"))); // NOI18N
+        jPanel2.add(jLabel1, java.awt.BorderLayout.LINE_END);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
 
@@ -79,16 +136,25 @@ public class painelVerMidias extends javax.swing.JPanel {
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         try {
 //            ComunicacaoBD.deletar(tabela.getSelectedRow());
+            JOptionPane.showConfirmDialog(this, "Realmente deseja deletar a midia selecionada?");
             popularTabela();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
+
+    private void txtBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaKeyTyped
+        try {
+            tabela.setModel(ComunicacaoBD.getEntretenimentos(this.txtBusca.getText()));
+        } catch (Exception ex) {
+            Logger.getLogger(painelVerMidias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtBuscaKeyTyped
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnDeletar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

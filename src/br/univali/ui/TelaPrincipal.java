@@ -4,15 +4,11 @@ import br.univali.ui.paineis.painelVerMidias;
 import br.univali.alert.Aviso;
 import br.univali.bd.ComunicacaoBD;
 import br.univali.ui.paineis.painelAddMidia;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JPanel;
 
 public class TelaPrincipal extends javax.swing.JFrame {
@@ -21,10 +17,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private JPanel addMidia = new painelAddMidia();
     
     public TelaPrincipal() throws Exception {
-        //this.setUndecorated(true);
         initComponents();
         ConfigurarPaineis();
         this.labelNomeUsuario.setText(ComunicacaoBD.getUsuario(1));
+        painelConteudo.add(midias);
+        atualizarPainel();
     }  
     
     public void ConfigurarPaineis(){

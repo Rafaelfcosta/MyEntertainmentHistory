@@ -1,9 +1,11 @@
 package br.univali.bd;
 
+import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
@@ -58,11 +60,13 @@ public class ComunicacaoBD {
         }
         return combo;
     }
+    
     public static String getUsuario(int id) throws Exception{
         conexao = GerenciadorConexao.getConexao();
         String SQL = "SELECT * FROM USUARIOS WHERE id_usuario = " + id;
         pst = conexao.prepareStatement(SQL);
         rs = pst.executeQuery(SQL);
+        rs.next();
         return rs.getString("nome").toUpperCase();
     }
     
@@ -100,7 +104,41 @@ public class ComunicacaoBD {
             
             linha.add(titulo);
             linha.add(getCategoria(categoria));
-            linha.add((int)duracao/60 + " horas");
+            if((int)duracao/60 > 0){
+                linha.add((int)duracao/60 + " horas");
+            }else{
+                linha.add((int)duracao + " minutos");
+            }
+            modelo.addRow(linha);
+        }
+        return modelo;
+    }
+    
+    public static DefaultTableModel getEntretenimentos(String texto) throws Exception{
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Título");
+        modelo.addColumn("Categoria");
+        modelo.addColumn("Duração da Sessão");
+        
+        conexao = GerenciadorConexao.getConexao();
+        String SQL = "SELECT * FROM ENTRETENIMENTOS WHERE titulo LIKE '%" + texto + "%'";
+        pst = conexao.prepareStatement(SQL);
+        rs = pst.executeQuery(SQL);
+        while(rs.next()){
+            Vector linha = new Vector();
+            
+            int id = rs.getInt("id_entretenimento");
+            String titulo = rs.getString("titulo");
+            double duracao = rs.getDouble("duracao_sessao");
+            int categoria = rs.getInt("categoria");
+            
+            linha.add(titulo);
+            linha.add(getCategoria(categoria));
+            if((int)duracao/60 > 0){
+                linha.add((int)duracao/60 + " horas");
+            }else{
+                linha.add((int)duracao + " minutos");
+            }
             modelo.addRow(linha);
         }
         return modelo;
@@ -158,6 +196,7 @@ public class ComunicacaoBD {
         pst.setInt(4, id_usuario);
         pst.executeUpdate();
     }
+    
     
     
     
